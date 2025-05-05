@@ -5,5 +5,11 @@ coucou c'est le README.md
 
 ## organisation
 
+lien vers le trello en espérent que sa marche : 
+
+```bash
+https://trello.com/b/asNWxa2a/parcours-js
+```
+
 commancement du trello
 ![trello1](/image/trello1.png)
