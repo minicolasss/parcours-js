@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mini-Netflix - Upload de vidéos</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="logo">Mini-Netflix</div>
+      <ul>
+        <li><a href="/">Accueil</a></li>
+        <li><a href="/video">Mes Vidéos</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="upload-section">
+      <h1>Bienvenue sur Mini-Netflix</h1>
+      <p>Uploadez vos vidéos et regardez-les quand vous voulez !</p>
+      
+      <div class="upload-form">
+        <h2>Uploader une nouvelle vidéo</h2>
+        <form action="/upload" method="POST" enctype="multipart/form-data">
+          <div class="form-group">
+            <label for="videoFile">Sélectionnez une vidéo (max 50 MB)</label>
+            <input type="file" id="videoFile" name="videoFile" accept="video/*" required>
+          </div>
+          <button type="submit" class="btn-primary">Uploader</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2023 Mini-Netflix - Projet d'apprentissage JavaScript</p>
+  </footer>
+</body>
+</html>

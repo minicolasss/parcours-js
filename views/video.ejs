@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mini-Netflix - Mes Vidéos</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="logo">Mini-Netflix</div>
+      <ul>
+        <li><a href="/">Accueil</a></li>
+        <li><a href="/video">Mes Vidéos</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="videos-section">
+      <h1>Mes Vidéos</h1>
+      
+      <% if (videos.length === 0) { %>
+        <div class="no-videos">
+          <p>Aucune vidéo n'a été uploadée pour le moment.</p>
+          <a href="/" class="btn-primary">Uploader une vidéo</a>
+        </div>
+      <% } else { %>
+        <div class="video-grid">
+          <% videos.forEach(video => { %>
+            <div class="video-card">
+              <div class="video-thumbnail">
+                <video src="<%= video.path %>" preload="metadata"></video>
+                <div class="play-icon">▶</div>
+              </div>
+              <div class="video-info">
+                <h3><%= video.name %></h3>
+                <p>Uploadée le <%= video.created.toLocaleDateString() %></p>
+                <a href="/player/<%= video.name %>" class="btn-secondary">Regarder</a>
+              </div>
+            </div>
+          <% }); %>
+        </div>
+      <% } %>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; Mini-Netflix</p>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const videoElements = document.querySelectorAll('.video-thumbnail video');
+      videoElements.forEach(video => {
+        video.addEventListener('loadedmetadata', () => {
+          if (video.duration > 2) {
+            video.currentTime = 1;
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

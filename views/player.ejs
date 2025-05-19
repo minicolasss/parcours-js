@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mini-Netflix - <%= title %></title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="player-page">
+  <header>
+    <nav>
+      <div class="logo">Mini-Netflix</div>
+      <ul>
+        <li><a href="/">Accueil</a></li>
+        <li><a href="/video">Mes Vidéos</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="player-section">
+      <h1><%= title %></h1>
+      
+      <div class="video-player">
+        <video controls autoplay>
+          <source src="<%= video %>" type="video/mp4">
+          Votre navigateur ne supporte pas la lecture de vidéos.
+        </video>
+      </div>
+      
+      <div class="player-controls">
+        <a href="/videos" class="btn-secondary">Retour aux vidéos</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2023 Mini-Netflix - Projet d'apprentissage JavaScript</p>
+  </footer>
+</body>
+</html>
