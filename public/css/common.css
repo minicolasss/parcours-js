@@ -1,7 +1,7 @@
 :root {
   --primary-color: #e50914;
   --secondary-color: #221f1f;
-  --bg-color: #141414;
+  --bg-color: #3D3D3D;
   --text-color: #fff;
   --card-bg: #333;
   --hover-color: #f40612;
@@ -166,16 +166,18 @@ nav ul {
   padding: 0.8rem 1.5rem;
   font-size: 1rem;
   color: var(--text-color);
-  background-color: var(--secondary-color);
-  border: none;
+  background-color: transparent;
+  border: 1px solid var(--btn-outline);
   border-radius: 25px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 .search-button:hover {
-  background-color: var(--primary-color);
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--text-color);
 }
+
 
 main {
   max-width: 1400px;

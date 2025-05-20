@@ -86,6 +86,8 @@ app.post('/upload', (req, res) => {
     }
 
     const category = req.body.category;
+    const title = req.body.title || 'Sans titre';
+
     if (!category) {
       return res.status(400).render('error', {
         message: 'Veuillez sélectionner une catégorie'
@@ -95,18 +97,29 @@ app.post('/upload', (req, res) => {
     // Déplacer le fichier vers le bon dossier
     const oldPath = req.file.path;
     const newDir = `uploads/${category}`;
-    const newPath = `${newDir}/${req.file.filename}`;
+    const fileExtension = path.extname(req.file.filename);
+    const newFilename = `${Date.now()}_${title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}${fileExtension}`;
+    const newPath = `${newDir}/${newFilename}`;
 
     if (!fs.existsSync(newDir)) {
       fs.mkdirSync(newDir, { recursive: true });
     }
 
+    // Créer un fichier metadata JSON
+    const metadata = {
+      title: title,
+      originalName: req.file.originalname,
+      uploadDate: new Date(),
+      filename: newFilename
+    };
+
+    fs.writeFileSync(`${newDir}/${newFilename}.json`, JSON.stringify(metadata));
     fs.renameSync(oldPath, newPath);
+    
     res.redirect(`/category/${category}`);
   });
 });
 
-// Affichage des vidéos par catégorie
 app.get('/category/:categoryName', (req, res) => {
   try {
     const categoryName = req.params.categoryName;
@@ -119,16 +132,27 @@ app.get('/category/:categoryName', (req, res) => {
     }
     
     const files = fs.readdirSync(categoryDir);
-    const videos = files.filter(file => {
-      const extname = path.extname(file).toLowerCase();
-      return ['.mp4', '.webm', '.ogg', '.mov'].includes(extname);
-    }).map(file => {
-      return {
-        name: file,
-        path: `/uploads/${categoryName}/${file}`,
-        created: fs.statSync(`${categoryDir}${file}`).birthtime
-      };
-    });
+    const videos = files
+      .filter(file => {
+        const extname = path.extname(file).toLowerCase();
+        return ['.mp4', '.webm', '.ogg', '.mov'].includes(extname);
+      })
+      .map(file => {
+        const metadataPath = `${categoryDir}${file}.json`;
+        let title = path.parse(file).name.split('_').slice(1).join('_'); // Enlève le timestamp
+        
+        if (fs.existsSync(metadataPath)) {
+          const metadata = JSON.parse(fs.readFileSync(metadataPath));
+          title = metadata.title; // Utilise le titre stocké dans les métadonnées
+        }
+
+        return {
+          name: file,
+          title: title, 
+          path: `/uploads/${categoryName}/${file}`,
+          created: fs.statSync(`${categoryDir}${file}`).birthtime
+        };
+      });
     
     videos.sort((a, b) => b.created - a.created);
     
@@ -143,11 +167,21 @@ app.get('/category/:categoryName', (req, res) => {
 // Page de lecture de vidéo
 app.get('/player/:category/:filename', (req, res) => {
   const { category, filename } = req.params;
+  const videoPath = `./uploads/${category}/${filename}`;
+  const metadataPath = `./uploads/${category}/${filename}.json`;
   
-  if (fs.existsSync(`./uploads/${category}/${filename}`)) {
+  if (fs.existsSync(videoPath)) {
+    let title = filename;
+    
+    // Récupérer le titre depuis le fichier metadata
+    if (fs.existsSync(metadataPath)) {
+      const metadata = JSON.parse(fs.readFileSync(metadataPath));
+      title = metadata.title; // Utiliser le titre stocké dans les métadonnées
+    }
+    
     res.render('player', { 
       video: `/uploads/${category}/${filename}`, 
-      title: filename,
+      title: title, // Ce sera le titre propre
       category
     });
   } else {
