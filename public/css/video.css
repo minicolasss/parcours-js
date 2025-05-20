@@ -1,5 +1,7 @@
 .videos-section {
-  padding: 1rem 0;
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 180px);
 }
 
 .video-grid {
@@ -14,6 +16,12 @@
   border-radius: 8px;
   overflow: hidden;
   transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.video-card a {
+  text-decoration: none;
+  color: inherit;
 }
 
 .video-thumbnail {
@@ -43,6 +51,7 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  text-decoration: none;
 }
 
 .no-videos {

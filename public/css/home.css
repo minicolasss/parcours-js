@@ -27,6 +27,7 @@
   overflow: hidden;
   flex: 1;
   max-width: 450px;
+  text-decoration: none; /* Ajout pour enlever le soulignement */
 }
 
 .category-thumbnail {
@@ -54,11 +55,22 @@
   font-size: 1.2rem;
   margin-bottom: 0.5rem;
   color: var(--text-color);
+  text-decoration: none; /* Ajout pour enlever le soulignement */
 }
 
 .category-info p {
   color: rgba(255,255,255,0.8);
   font-size: 0.9rem;
+}
+
+.category-card a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.category-info a {
+  text-decoration: none;
+  color: inherit;
 }
 
 @media (max-width: 768px) {
