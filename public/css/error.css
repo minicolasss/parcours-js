@@ -1,0 +1,39 @@
+.error-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 70vh;
+}
+
+.error-container {
+  max-width: 600px;
+  margin: 4rem auto;
+  padding: 3rem 2rem;
+  text-align: center;
+  background-color: var(--secondary-color);
+  border-radius: 15px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
+
+.error-container h1 {
+  font-size: 2rem;
+  color: var(--text-color);
+  margin-bottom: 1.5rem;
+}
+
+.error-container p {
+  color: rgba(255,255,255,0.8);
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+}
+
+.error-container .btn-primary {
+  margin-top: 1rem;
+}
+
+@media (max-width: 768px) {
+  .error-container {
+    margin: 2rem 1rem;
+    padding: 2rem 1rem;
+  }
+}

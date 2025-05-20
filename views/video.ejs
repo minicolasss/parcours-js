@@ -3,51 +3,70 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mini-Netflix - Mes Vidéos</title>
-  <link rel="stylesheet" href="/css/style.css">
+  <title>XXXXX - <%= category %></title>
+  <link rel="stylesheet" href="/css/common.css">
+  <link rel="stylesheet" href="/css/video.css">
 </head>
 <body>
   <header>
     <nav>
-      <div class="logo">Mini-Netflix</div>
-      <ul>
-        <li><a href="/">Accueil</a></li>
-        <li><a href="/video">Mes Vidéos</a></li>
-      </ul>
+      <div class="logo-container">
+        <div class="logo-circle">
+          <div class="logo">XXXXX</div>
+        </div>
+      </div>
+      <div class="nav-right">
+        <ul>
+          <li><a href="/" class="btn-outline">Accueil</a></li>
+        </ul>
+        <div class="nav-buttons">
+          <a href="/login" class="btn-outline">se connecter</a>
+          <a href="/upload" class="btn-outline">télécharger</a>
+          <div class="toggle-switch"></div>
+          <div class="user-icon-container">
+            <div class="user-icon"></div>
+          </div>
+        </div>
+      </div>
     </nav>
   </header>
 
   <main>
+    <div class="search-container">
+      <form action="/search" method="GET">
+        <input type="text" name="query" placeholder="Rechercher..." class="search-input">
+        <input type="hidden" name="category" value="<%= category %>">
+        <button type="submit" class="search-button">Rechercher</button>
+      </form>
+    </div>
+    
     <section class="videos-section">
-      <h1>Mes Vidéos</h1>
-      
       <% if (videos.length === 0) { %>
         <div class="no-videos">
-          <p>Aucune vidéo n'a été uploadée pour le moment.</p>
-          <a href="/" class="btn-primary">Uploader une vidéo</a>
+          <p>Aucune vidéo n'a été uploadée dans cette catégorie pour le moment.</p>
+          <a href="/upload" class="btn-primary">Uploader une vidéo</a>
         </div>
       <% } else { %>
         <div class="video-grid">
-          <% videos.forEach(video => { %>
+        <% videos.forEach(video => { %>
             <div class="video-card">
-              <div class="video-thumbnail">
+            <a href="/player/<%= category %>/<%= video.name %>">
+                <div class="video-thumbnail">
                 <video src="<%= video.path %>" preload="metadata"></video>
-                <div class="play-icon">▶</div>
-              </div>
-              <div class="video-info">
-                <h3><%= video.name %></h3>
-                <p>Uploadée le <%= video.created.toLocaleDateString() %></p>
-                <a href="/player/<%= video.name %>" class="btn-secondary">Regarder</a>
-              </div>
+                </div>
+                <div class="video-info">
+                <p class="video-title"><%= video.name %></p>
+                </div>
+            </a>
             </div>
-          <% }); %>
+        <% }); %>
         </div>
       <% } %>
     </section>
   </main>
 
   <footer>
-    <p>&copy; Mini-Netflix</p>
+    <p>&copy; 2025 XXXXX - Plateforme de clips esports</p>
   </footer>
 
   <script>
